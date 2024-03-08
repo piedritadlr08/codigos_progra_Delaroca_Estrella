@@ -1,0 +1,114 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Persona {
+    string nombre;
+    string vecindad;
+    int diaNacimiento;
+    int mesNacimiento;
+    int anoNacimiento;
+};
+
+void buscarPorPosicion(const vector<Persona>& personas, int posicion) {
+    if (posicion >= 1 && posicion <= personas.size()) {
+        cout << "\nPersona encontrada en la posición " << posicion << ":" << endl;
+        cout << "Nombre: " << personas[posicion - 1].nombre << endl;
+        cout << "Vecindad: " << personas[posicion - 1].vecindad << endl;
+        cout << "Fecha de nacimiento: " << personas[posicion - 1].diaNacimiento << "/" << personas[posicion - 1].mesNacimiento << "/" << personas[posicion - 1].anoNacimiento << endl;
+
+        int edad = 2024 - personas[posicion - 1].anoNacimiento;
+        if (personas[posicion - 1].mesNacimiento > 2 || (personas[posicion - 1].mesNacimiento == 2 && personas[posicion - 1].diaNacimiento > 16)) {
+            edad--;
+        }
+        cout << "Edad: " << edad << " años" << endl;
+        cout << (edad >= 18 ? "Es mayor de edad" : "Es menor de edad") << endl;
+    } else {
+        cout << "No hay ninguna persona en la posición " << posicion << endl;
+    }
+}
+
+void buscarPorNombre(const vector<Persona>& personas, const string& nombre) {
+    bool encontrado = false;
+    for (size_t i = 0; i < personas.size(); ++i) {
+        if (personas[i].nombre == nombre) {
+            encontrado = true;
+            cout << "\nPersona encontrada con el nombre '" << nombre << "':" << endl;
+            cout << "Posición en la fila: " << i + 1 << endl;
+            cout << "Nombre: " << personas[i].nombre << endl;
+            cout << "Vecindad: " << personas[i].vecindad << endl;
+            cout << "Fecha de nacimiento: " << personas[i].diaNacimiento << "/" << personas[i].mesNacimiento << "/" << personas[i].anoNacimiento << endl;
+
+            int edad = 2024 - personas[i].anoNacimiento;
+            if (personas[i].mesNacimiento > 2 || (personas[i].mesNacimiento == 2 && personas[i].diaNacimiento > 16)) {
+                edad--;
+            }
+            cout << "Edad: " << edad << " años" << endl;
+            cout << (edad >= 18 ? "Es mayor de edad" : "Es menor de edad") << endl;
+        }
+    }
+    if (!encontrado) {
+        cout << "No se encontró ninguna persona con el nombre '" << nombre << "'" << endl;
+    }
+}
+
+int main() {
+    vector<Persona> personas;
+
+    cout << "--------------------BIENVENIDO A RENAP--------------------\n\n\n";
+
+    int cantidadPersonas;
+    cout << "Ingrese la cantidad de personas en la fila: ";
+    cin >> cantidadPersonas;
+
+    for (int i = 0; i < cantidadPersonas; ++i) {
+        Persona persona;
+        cout << "Persona " << i + 1 << ":" << endl;
+        cout << "Nombre: ";
+        cin >> persona.nombre;
+        cout << "Vecindad: ";
+        cin >> persona.vecindad;
+        cout << "Fecha de nacimiento (dd mm aaaa): ";
+        cin >> persona.diaNacimiento >> persona.mesNacimiento >> persona.anoNacimiento;
+        personas.push_back(persona);
+    }
+
+    cout << "\nDatos ingresados y calculo de mayoría de edad:" << endl;
+    for (int i = 0; i < cantidadPersonas; ++i) {
+        cout << "\nPersona " << i + 1 << ":" << endl;
+        cout << "Nombre: " << personas[i].nombre << endl;
+        cout << "Vecindad: " << personas[i].vecindad << endl;
+        cout << "Fecha de nacimiento: " << personas[i].diaNacimiento << "/" << personas[i].mesNacimiento << "/" << personas[i].anoNacimiento << endl;
+
+        int edad = 2024 - personas[i].anoNacimiento;
+        if (personas[i].mesNacimiento > 2 || (personas[i].mesNacimiento == 2 && personas[i].diaNacimiento > 16)) {
+            edad--;
+        }
+        cout << "Edad: " << edad << " años" << endl;
+        cout << (edad >= 18 ? "Es mayor de edad" : "Es menor de edad") << endl;
+    }
+
+    char opcion;
+    cout << "\n¿Desea buscar a una persona por su posición en la fila (p) o por su nombre (n)? ";
+    cin >> opcion;
+
+    if (opcion == 'p' || opcion == 'P') {
+        int posicionBusqueda;
+        cout << "Ingrese la posición de la persona que desea buscar: ";
+        cin >> posicionBusqueda;
+        buscarPorPosicion(personas, posicionBusqueda);
+    } else if (opcion == 'n' || opcion == 'N') {
+        string nombreBusqueda;
+        cout << "Ingrese el nombre de la persona que desea buscar: ";
+        cin >> nombreBusqueda;
+        buscarPorNombre(personas, nombreBusqueda);
+    } else {
+        cout << "Opción no válida. Gracias por usar el programa." << endl;
+    }
+
+    return 0;
+}
+
+
